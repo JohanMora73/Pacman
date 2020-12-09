@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.2, 2020-12-04T02:42:23. -->
+<!-- Written by QtCreator 4.13.2, 2020-12-05T10:48:35. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -325,8 +325,9 @@
     <valuelist type="QVariantList" key="CustomOutputParsers"/>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/semestre4/Informática 2/Lab5/Pacman/Pacman.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/semestre4/Informática 2/Lab5/Pacman/Pacman.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Pacman2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/JOHAN MORA/Downloads/Pacman/Pacman.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/JOHAN MORA/Downloads/Pacman/Pacman.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>

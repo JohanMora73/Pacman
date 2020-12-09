@@ -9,7 +9,7 @@ pacman::pacman(int x, int y)
     fila = 0;
     columna =510
             ;
-    pixmap =new QPixmap(":/imagenes/Pacmandeff.png");
+    pixmap =new QPixmap(":/imagenes/Pacmandeff.png");//Imagen donde está el pacman
 
     //dimensiones de cada imagen
     ancho=30;
@@ -18,6 +18,8 @@ pacman::pacman(int x, int y)
     connect(timer,&QTimer::timeout,this,&pacman::Actualizacion);
 }
 
+/*El movimiento de la boca del pacman esta dado por 3 imagenes consecutivas de 30*30 pixeles,al cambiar de direccion se cambian
+las filas sobre las cuales se itera*/
 void pacman::orientacion(int num)
 {
     switch (num) {
@@ -88,6 +90,7 @@ void pacman::right()
     setPos(posx,posy);
 }
 
+/*Se itera la fila en la que se encuentra el pacman para dar el efecto de abrir y cerrar la boca*/
 void pacman::Actualizacion()
 {
     fila +=30;

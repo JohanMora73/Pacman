@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -12,26 +12,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     y=0;
     ancho=700;
     alto=700;
-    scena=new QGraphicsScene(x,y,ancho,alto);
-    scena->setBackgroundBrush(QPixmap(":/imagenes/mundo.png"));
+    scena=new QGraphicsScene(x,y,ancho,alto);                   //Se crea la escena
+    scena->setBackgroundBrush(QPixmap(":/imagenes/mundo.png")); //Se agrega la imagen del laberinto
 
     ui->graphicsView->setScene(scena);
-    ui->graphicsView->setStyleSheet("background-color:black;");
+    ui->graphicsView->setStyleSheet("background-color:black;"); //se agrega un fondo negro
 
-    personaje=new pacman(350,530);
+    personaje=new pacman(350,530);                              // Se la dan las condiciones iniciales al personaje
 
     scena->addItem(personaje);
     puntaje=0;
-    llenado();
+    llenado();                                                   //Funcion que llena de puntos el mapa
     fantasma *f1=new fantasma(40,130);
     scena->addItem(f1);
 }
 
-void MainWindow::keyPressEvent(QKeyEvent *evento)
+void MainWindow::keyPressEvent(QKeyEvent *evento)                //Verifica cuando precionan una tecla
 {
     if(evento->key()==Qt::Key_A){
-        if(verificacion(1)==true){
-            personaje->orientacion(2);
+        if(verificacion(1)==true){                               //Se verifica si el personaje se puede mover
+            personaje->orientacion(2);                           //Se le da una orientacion al personaje dependiendo de la direccion
             personaje->left();
         }
     }
@@ -53,7 +53,7 @@ void MainWindow::keyPressEvent(QKeyEvent *evento)
             personaje->orientacion(1);
         }
     }
-    ui->puntos->setText("Puntuacion: " + QString::number(puntaje));
+    ui->puntos->setText("Puntuacion: " + QString::number(puntaje));//Se muestra la puntuacion en el label llamado puntos
     puntuacion(personaje);
     Transportar(personaje);
     //MoverFantasma(f1,660);
@@ -93,18 +93,18 @@ bool MainWindow::verificacion(int caso)
     return validate;
 }
 
+/*Se verifica cuando el personaje colisiona con un onjetp de la clase puntos para eliminar dicho objeto de la escena*/
 void MainWindow::puntuacion(pacman *temp)
 {
-    //eliminamos la colision con la puntuacion
-    QList<QGraphicsItem *>choques=temp->collidingItems();
-    for(int i=0;i<choques.size();i++){
-        if(typeid (*(choques[i]))==typeid(puntos)){
-            scena->removeItem(choques[i]);
-            puntaje++;
+    QList<QGraphicsItem *>choques=temp->collidingItems();//Se crea una lista con los objetos que chocan al personaje
+    for(int i=0;i<choques.size();i++){                    //Se recorre dicha lista
+        if(typeid (*(choques[i]))==typeid(puntos)){       //Se verifica se cada elemento de la lista es de la clase puntos
+            scena->removeItem(choques[i]);                //De ser así se elimmina dicho objeto
+            puntaje++;                                    //Se suma un punto
         }
     }
 }
-
+//Funcion con la que se transporta el personaje a traves de los tuneles
 void MainWindow::Transportar(pacman *personaje)
 {
     if(personaje->getPosx()<=0){
@@ -128,7 +128,7 @@ void MainWindow::MoverFantasma(fantasma *f,int final)
 
 bool MainWindow::bordercollision(pacman *personaje)
 {
-    //collisiones con el mapa
+    //se definen las posibles posiciones que puede tomar el personaje a lo largo del laberinto
     if(personaje->getPosx()>=35 && personaje->getPosx()<=315 && personaje->getPosy()>=45 && personaje->getPosy()<=55)return true;//1
     if(personaje->getPosx()>=35 && personaje->getPosx()<=660 && personaje->getPosy()>=125 && personaje->getPosy()<=135)return true;//3
     if(personaje->getPosx()>=35 && personaje->getPosx()<=45 && personaje->getPosy()>=45 && personaje->getPosy()<=200)return true;//2
@@ -144,18 +144,44 @@ bool MainWindow::bordercollision(pacman *personaje)
     if(personaje->getPosx()>=530 && personaje->getPosx()<=660 && personaje->getPosy()>=590 && personaje->getPosy()<=600)return true;//13
     if(personaje->getPosx()>=35 && personaje->getPosx()<=45 && personaje->getPosy()>=590 && personaje->getPosy()<=660)return true;//14
     if(personaje->getPosx()>=650 && personaje->getPosx()<=660 && personaje->getPosy()>=590 && personaje->getPosy()<=660)return true;//15
-    if(personaje->getPosx()>=35 && personaje->getPosx()<=660 && personaje->getPosy()>=650 && personaje->getPosy()<=660)return true;//16
+    if(personaje->getPosx()>=35 && personaje->getPosx()<=660 && personaje->getPosy()>=655 && personaje->getPosy()<=660)return true;//16
     if(personaje->getPosx()>=163 && personaje->getPosx()<=540 && personaje->getPosy()>=525 && personaje->getPosy()<=535)return true;//17
-    if(personaje->getPosx()>=-20 && personaje->getPosx()<=240 && personaje->getPosy()>=325 && personaje->getPosy()<=335)return true;//18
-    if(personaje->getPosx()>=460 && personaje->getPosx()<=720 && personaje->getPosy()>=325 && personaje->getPosy()<=335)return true;//19
-    if(personaje->getPosx()>=230 && personaje->getPosx()<=240 && personaje->getPosy()>=525 && personaje->getPosy()<=600)return true;//20
+    if(personaje->getPosx()>=-20 && personaje->getPosx()<=245 && personaje->getPosy()>=325 && personaje->getPosy()<=335)return true;//18
+    if(personaje->getPosx()>=455 && personaje->getPosx()<=720 && personaje->getPosy()>=325 && personaje->getPosy()<=335)return true;//19
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=240 && personaje->getPosy()>=525 && personaje->getPosy()<=600)return true;//20
+    if(personaje->getPosx()>=310 && personaje->getPosx()<=320 && personaje->getPosy()>=590 && personaje->getPosy()<=660)return true;//21
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=320 && personaje->getPosy()>=590 && personaje->getPosy()<=600)return true;//22
+    if(personaje->getPosx()>=380 && personaje->getPosx()<=390 && personaje->getPosy()>=590 && personaje->getPosy()<=660)return true;//23
+    if(personaje->getPosx()>=380 && personaje->getPosx()<=465 && personaje->getPosy()>=590 && personaje->getPosy()<=600)return true;//24
+    if(personaje->getPosx()>=455 && personaje->getPosx()<=465 && personaje->getPosy()>=525 && personaje->getPosy()<=600)return true;//25
+    if(personaje->getPosx()>=605 && personaje->getPosx()<=615 && personaje->getPosy()>=525 && personaje->getPosy()<=600)return true;//26
+    if(personaje->getPosx()>=605 && personaje->getPosx()<=660 && personaje->getPosy()>=525 && personaje->getPosy()<=535)return true;//27
+    if(personaje->getPosx()>=650 && personaje->getPosx()<=660 && personaje->getPosy()>=465 && personaje->getPosy()<=535)return true;//28
+    if(personaje->getPosx()>=380 && personaje->getPosx()<=660 && personaje->getPosy()>=460 && personaje->getPosy()<=470)return true;//29
+    if(personaje->getPosx()>=85 && personaje->getPosx()<=95 && personaje->getPosy()>=525 && personaje->getPosy()<=600)return true;//30
+    if(personaje->getPosx()>=35 && personaje->getPosx()<=95 && personaje->getPosy()>=525 && personaje->getPosy()<=535)return true;//31
+    if(personaje->getPosx()>=35 && personaje->getPosx()<=45 && personaje->getPosy()>=465 && personaje->getPosy()<=535)return true;//32
+    if(personaje->getPosx()>=35 && personaje->getPosx()<=320 && personaje->getPosy()>=460 && personaje->getPosy()<=470)return true;//33
+    if(personaje->getPosx()>=380 && personaje->getPosx()<=390 && personaje->getPosy()>=465 && personaje->getPosy()<=535)return true;//35
+    if(personaje->getPosx()>=310 && personaje->getPosx()<=320 && personaje->getPosy()>=465 && personaje->getPosy()<=535)return true;//34
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=465 && personaje->getPosy()>=395 && personaje->getPosy()<=405)return true;//36
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=245 && personaje->getPosy()>=255 && personaje->getPosy()<=470)return true;//37
+    if(personaje->getPosx()>=455 && personaje->getPosx()<=465 && personaje->getPosy()>=255 && personaje->getPosy()<=470)return true;//38
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=465 && personaje->getPosy()>=255 && personaje->getPosy()<=265)return true;//39
+    if(personaje->getPosx()>=310 && personaje->getPosx()<=320 && personaje->getPosy()>=200 && personaje->getPosy()<=265)return true;//40
+    if(personaje->getPosx()>=380 && personaje->getPosx()<=390 && personaje->getPosy()>=200 && personaje->getPosy()<=265)return true;//41
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=320 && personaje->getPosy()>=190 && personaje->getPosy()<=200)return true;///42
+    if(personaje->getPosx()>=380 && personaje->getPosx()<=465 && personaje->getPosy()>=190 && personaje->getPosy()<=200)return true;///43
+    if(personaje->getPosx()>=235 && personaje->getPosx()<=245 && personaje->getPosy()>=125 && personaje->getPosy()<=200)return true;//44
+    if(personaje->getPosx()>=455 && personaje->getPosx()<=465 && personaje->getPosy()>=125 && personaje->getPosy()<=200)return true;//45
+    if(personaje->getPosx()>=320 && personaje->getPosx()<=380 && personaje->getPosy()>=255 && personaje->getPosy()<=350)return true;//46
+    if(personaje->getPosx()>=280 && personaje->getPosx()<=415 && personaje->getPosy()>=310 && personaje->getPosy()<=350)return true;//45
     return false;
-
 }
 
 void MainWindow::llenado()
 {
-    //objetos para la puntuacion
+    //Se crean los objetos de la clase puntos para llenar el mapa
     puntos *punt0=new puntos(40,50);
     scena->addItem(punt0);
     puntos *punt1=new puntos(70,50);
@@ -246,7 +272,7 @@ void MainWindow::llenado()
     scena->addItem(punt43);
     puntos *punt44=new puntos(165,165);
     scena->addItem(punt44);
-    puntos *punt45=new puntos(165,210);//
+    puntos *punt45=new puntos(165,210);
     scena->addItem(punt45);
     puntos *punt46=new puntos(165,265);
     scena->addItem(punt46);
@@ -264,7 +290,7 @@ void MainWindow::llenado()
     scena->addItem(punt52);
     puntos *punt53=new puntos(165,590);
     scena->addItem(punt53);
-    puntos *punt54=new puntos(165,265);//
+    puntos *punt54=new puntos(165,265);
     scena->addItem(punt54);
     puntos *punt55=new puntos(535,310);
     scena->addItem(punt55);
@@ -284,7 +310,7 @@ void MainWindow::llenado()
     scena->addItem(punt62);
     puntos *punt63=new puntos(535,210);
     scena->addItem(punt63);
-    puntos *punt64=new puntos(40,655);//
+    puntos *punt64=new puntos(40,655);
     scena->addItem(punt64);
     puntos *punt65=new puntos(85,655);
     scena->addItem(punt65);
@@ -394,8 +420,65 @@ void MainWindow::llenado()
     scena->addItem(punt117);
     puntos *punt118=new puntos(660,330);
     scena->addItem(punt118);
+    puntos *punt119=new puntos(620,330);
+    scena->addItem(punt119);
+    puntos *punt120=new puntos(580,330);
+    scena->addItem(punt120);
+    puntos *punt121=new puntos(495,330);
+    scena->addItem(punt121);
+    puntos *punt122=new puntos(460,355);
+    scena->addItem(punt122);
+    puntos *punt123=new puntos(40,330);
+    scena->addItem(punt123);
+    puntos *punt124=new puntos(80,330);
+    scena->addItem(punt124);
+    puntos *punt125=new puntos(120,330);
+    scena->addItem(punt125);
+    puntos *punt126=new puntos(205,330);
+    scena->addItem(punt126);
+    puntos *punt127=new puntos(240,355);
+    scena->addItem(punt127);
+    puntos *punt128=new puntos(370,395);
+    scena->addItem(punt128);
+    puntos *punt129=new puntos(410,395);
+    scena->addItem(punt129);
+    puntos *punt130=new puntos(325,395);
+    scena->addItem(punt130);
+    puntos *punt131=new puntos(285,395);
+    scena->addItem(punt131);
+    puntos *punt132=new puntos(460,395);
+    scena->addItem(punt132);
+    puntos *punt133=new puntos(240,395);
+    scena->addItem(punt133);
+    puntos *punt134=new puntos(240,200);
+    scena->addItem(punt134);
+    puntos *punt135=new puntos(275,200);
+    scena->addItem(punt135);
+    puntos *punt136=new puntos(310,200);
+    scena->addItem(punt136);
+    puntos *punt137=new puntos(385,200);
+    scena->addItem(punt137);
+    puntos *punt138=new puntos(420,200);
+    scena->addItem(punt138);
+    puntos *punt139=new puntos(455,200);
+    scena->addItem(punt139);
+    puntos *punt140=new puntos(370,260);
+    scena->addItem(punt140);
+    puntos *punt141=new puntos(410,260);
+    scena->addItem(punt141);
+    puntos *punt142=new puntos(325,260);
+    scena->addItem(punt142);
+    puntos *punt143=new puntos(285,260);
+    scena->addItem(punt143);
+    puntos *punt144=new puntos(460,260);
+    scena->addItem(punt144);
+    puntos *punt145=new puntos(240,260);
+    scena->addItem(punt145);
+    puntos *punt146=new puntos(240,300);
+    scena->addItem(punt146);
+    puntos *punt147=new puntos(460,300);
+    scena->addItem(punt147);
 }
-
 MainWindow::~MainWindow()
 {
     delete ui;
